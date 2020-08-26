@@ -2,8 +2,8 @@ require 'pry'
 
 class Person
 
-    attr_accessor :bank_account, :happiness, :hygiene
-    attr_reader :name
+    attr_accessor :bank_account
+    attr_reader :name, :happiness, :hygiene
     
     def initialize(name)
         @name = name
@@ -12,17 +12,13 @@ class Person
         @hygiene = 8
     end
 
-    # def hygiene=(number)
-    #     if (number > -1) && (number < 11)
-    #         then @hygiene = number
-    #     end
-    # end
+    def hygiene=(value)
+       @hygiene = [value, 0, 10].sort[1]
+    end
 
-    # def happiness=(number)
-    #     if (number > -1) && (number < 11)
-    #         then @happiness = number
-    #     end
-    # end
+    def happiness=(value)
+            @happiness = [value, 0, 10].sort[1]
+    end
 
     def clean?
         @hygiene > 7
@@ -38,14 +34,14 @@ class Person
     end
 
     def take_bath
-        @hygiene += 4
+        self.hygiene += 4
         p "♪ Rub-a-dub just relaxing in the tub ♫"
 
     end
 
     def work_out
-        @hygiene -= 3
-        @happiness += 2
+        self.hygiene -= 3
+        self.happiness += 2
         p "♪ another one bites the dust ♫"
 
     end
@@ -53,21 +49,20 @@ class Person
     def call_friend(friend)
         friend.happiness += 3
         self.happiness += 3
-        p "Hi Penelope! It's Felix. How are you?"
-
-
+        p "Hi #{friend.name}! It's #{self.name}. How are you?"
     end
 
     def start_conversation(person, topic)
-        case topic
-            when politics
-                p 'blah blah partisan blah lobbyist'
+        convo_topic = topic
+        case convo_topic
+            when "politics"
                 person.happiness -= 2
                 self.happiness -= 2
-            when weather
-                p 'blah blah sun blah rain'
+                p "blah blah partisan blah lobbyist"
+            when "weather"
                 person.happiness += 1
                 self.happiness += 1
+                p "blah blah sun blah rain"
             else
                 p 'blah blah blah blah blah'
         end
